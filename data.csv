@@ -1,0 +1,27 @@
+﻿"View: RRByOverDueExclConf, from Database: BP GRMT,  Extract created on: 03/06/2018 16:05",,,,,,,,,,
+Requested Start Date,Status,PgW,Lot,Project Name,ROR,IBM Project Manager,Assignmet Type,Seat No,Seat Title,Adam Grade
+16/01/2018,Searching,AD-Tech PgW,Lot 4,AD Secuirty GSD & GRC,ROR-160695-04,Naveen Pahuja,GD-Local ,3122948,HANA Security Architect,AD2
+29/01/2018,Proposed,AD-Upstream,Lot 4,Upstream,ROR-170455,Rob Lingwood/ Mukul Srivastava/ Rajesh Falak,US-Local ,3238342,SAP SD with Resource Related Billing,AD3
+12/02/2018,Searching,AD-Nike,N/A,Nike US/Mex,RO Number - TBC,Vishwanath Purohit  / Natalie Pelino / Ritanjali Pattnaik/Atlanta/IBM / Pravin Gupta,US-Local ,3288715,Nike US-MX-PP-PI & PP Consultant ,AD3
+12/02/2018,Searching,AD-CBA&F,Lot 4,SAP MDG,ROR-170350,Stephan Kluemper,GD-Local ,3301505,MDG Data Consultant,AD3
+19/02/2018,Searching,AD-Nike,Lot 1,Nike US/MX ,TBC,Vishwanath Purohit,GD-Local ,3285696,Logistics/WM Functional Consultant ,AD3
+19/02/2018,Searching,AD-Nike,N/A,Nike US/Mex,RO Number,Vishwanath Purohit ,GD-Landed US,3306318,Nike US-MX-PP-PI & PP Consultant ,AD3
+23/02/2018,Searching,Non-ADAM - Workday,N/A,BP HR Workday Services,n/a,Helen Anderson,UK-Local,3098686,Workday Data Conversion Lead,N/A
+26/02/2018,Searching,Internal,Internal,Confidential,Internal,Jenna Goldstein / David Warburton/UK/IBM,UK-Local,3230484,Workday Engagement Manager,N/A
+26/02/2018,Proposed,AD-CBA&F,Lot 4,SAP MDG,ROR-170350,Stephan Kluemper,GD-Local ,3285729,MDG Consultant Vendors,AD3
+26/02/2018,Proposed,AD-Upstream,Lot 4,GFT Americas,tbc,Narayan Mohta/Minneapolis/IBM/ Natalie Pelino,US-Local ,3304317,GFT Finance Data Analyst 2,AD3
+27/02/2018,Searching,Non-ADAM - Workday,N/A,BP HR Workday Services,n/a,Helen Anderson,UK-Local,3147149,Workday Benefits Lead 2,N/A
+05/03/2018,Proposed,AD-Other,Lot 4,GOM Data,ROR 170145,Natalie Pelino,US-Local ,3226832,Change Management,AD3
+05/03/2018,Proposed,AD-Tech PgW,Lot 4,AD Secuirty GSD & GRC,ROR-160695,Naveen Pahuja,UK-Local,3283222,Saviynt SME,AD3
+05/03/2018,Proposed,AD-CBA&F,Lot 4,SAP MDG,ROR-170350,Stephan Kluemper,UK-Local,3303368,SAP Solution Manager Consultant,AD3
+05/03/2018,Proposed,AD-CBA&F,Lot 4,SAP MDG,ROR-170350,Stephan Kluemper,Nearshore-Local,3303505,SAP Solution Manager Consultant,AD3
+05/03/2018,Proposed,AD-Nike,Lot 1,Nike US/MX,TBC,Vishwanath Purohit ,GD-Local ,3305398,Funtional Intergration Lead,AD3
+06/03/2018,Proposed,AD-Tech PgW,Lot 4,ERS/FRS AD Delivery,ROR 180008,Pinky Varghese/India/IBM,GD-Local ,3299134,ABAP Developer,AD3
+06/03/2018,Withdrawn,AD-Tech PgW,Lot 4,ERS/FRS AD Delivery,ROR 180008,Pinky Varghese/India/IBM,GD-Local ,3299134,ABAP Developer,AD3
+07/03/2018,Withdrawn,AD-Tech PgW,Lot 5,ERS/FRS AD Delivery,ROR 180009,Pinky Varghese/India/IBM,GD-Local ,3299135,ABAP Developer,AD4
+08/03/2018,Withdrawn,AD-Tech PgW,Lot 6,ERS/FRS AD Delivery,ROR 180010,Pinky Varghese/India/IBM,GD-Local ,3299136,ABAP Developer,AD5
+09/03/2018,Withdrawn,AD-Tech PgW,Lot 7,ERS/FRS AD Delivery,ROR 180011,Pinky Varghese/India/IBM,GD-Local ,3299137,ABAP Developer,AD6
+10/03/2018,Confirmed,AD-Tech PgW,Lot 8,ERS/FRS AD Delivery,ROR 180012,Pinky Varghese/India/IBM,GD-Local ,3299138,ABAP Developer,AD7
+11/03/2018,Confirmed,AD-Tech PgW,Lot 9,ERS/FRS AD Delivery,ROR 180013,Pinky Varghese/India/IBM,GD-Local ,3299139,ABAP Developer,AD8
+12/03/2018,Confirmed,AD-Tech PgW,Lot 10,ERS/FRS AD Delivery,ROR 180014,Pinky Varghese/India/IBM,GD-Local ,3299140,ABAP Developer,AD9
+13/03/2018,Confirmed,AD-Tech PgW,Lot 11,ERS/FRS AD Delivery,ROR 180015,Pinky Varghese/India/IBM,GD-Local ,3299141,ABAP Developer,AD10
