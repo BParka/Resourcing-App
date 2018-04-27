@@ -6,9 +6,6 @@ Created on Tue Apr 17 10:48:53 2018
 @author: bartlomiejparka
 """
 
-import json
-from textwrap import dedent as d
-
 import dash
 import dash_core_components as dcc
 import dash_html_components as html
@@ -24,18 +21,53 @@ import plotly.plotly as py
 
 import plotly
 import plotly.graph_objs as go
-from plotly.offline import download_plotlyjs, init_notebook_mode, plot, iplot
-plotly.offline.init_notebook_mode(connected=True)
-
 
 key_array = []
 
-df = pd.read_csv(
-    '/Users/bartlomiejparka/Documents/Resourcing App/data.csv', skiprows = 1)
+df_init = pd.read_csv(
+    '/Users/bartlomiejparka/Documents/Resourcing App/grmt_resource_requests.csv')
+
+df_top_table = pd.read_csv(
+    '/Users/bartlomiejparka/Documents/Resourcing App/toptable.csv')
+
+col_list_keep =['Job Title',
+ 'Status',
+ 'Openseat Number',
+ 'Duplicate Seat',
+ 'Assignment Type',
+ 'Work Location',
+ 'Landed',
+ 'Contract Specification',
+ 'PgW',
+ 'Lot',
+ 'Project Name',
+ 'Confirmed Candidate',
+ 'RO Number',
+ 'Commercial Status',
+ 'ADAM Grade',
+ 'No.Required',
+ 'PRG Band High',
+ 'PRG Band Low',
+ 'Open to Contractors',
+ 'BP Requested Seat?',
+ 'IBM Requested Start Date',
+ 'BP Requested Start Date',
+ 'BP PM',
+ 'PGW Lead',
+ 'IBM PM',
+ 'Job Description',
+ 'Mandatory Skills',
+ 'Desirable skills']
+
+result_keep = [df_init[e] for e in col_list_keep]
+
+df = pd.concat(result_keep, axis=1)
 
 df.dropna(0, how='all', inplace = True)
 
-df1 = pd.to_datetime(df.iloc[:, 0], format="%d/%m/%Y")
+df['IBM Requested Start Date'].replace("\ufeff", "", regex=True, inplace=True)
+
+df1 = pd.to_datetime(df['IBM Requested Start Date'], format="%d/%m/%Y")
 
 for i in df1:
     key_array.append(i.strftime('%Y-%m'))
@@ -69,7 +101,6 @@ for x in lsof_uniques:
     n = n + 1
     final_x.append(xlist)
     final_y.append(ylist)
-
 
 trace3 = go.Bar(
     x=final_x[2],
@@ -112,6 +143,17 @@ layout = go.Layout(
     barmode='stack'
 )
 
+def generate_table(dataframe, max_rows=8):
+    return html.Table(
+        # Header
+        [html.Tr([html.Th(col) for col in dataframe.columns])] +
+
+        # Body
+        [html.Tr([
+            html.Td(dataframe.iloc[i][col]) for col in dataframe.columns
+        ]) for i in range(min(len(dataframe), max_rows))]
+    )
+
 
 app = dash.Dash(__name__)
 
@@ -123,6 +165,7 @@ styles = {
 }
 
 app.layout = html.Div([
+    generate_table(df_top_table),
     dcc.Graph(
         id='basic-interactions',
         figure={
@@ -136,14 +179,15 @@ app.layout = html.Div([
     row_selectable=True,
     filterable=True,
     sortable=True,
-    selected_row_indices=[],
+    #resizable=True,
+    #selected_row_indices=[],
+    #column_widths=([50] * len(col_list_keep)),
+    #min_width=500,
+    columns=col_list_keep,
     id='datatable'
 ))
     
 ])
-
-
-
 
 @app.callback(
     Output('datatable', 'rows'),
@@ -159,28 +203,6 @@ def display_click_data(clickData):
             lsof_statuses.append(i[1])
     dfnew = df[(df.Status.isin(lsof_statuses)) & (df['Key'] == key)]
     return dfnew.to_dict('records')
-
-
-'''@app.callback(
-    Output('datatable', 'selected_row_indices'),
-    [Input('basic-interactions', 'clickData')],
-    [State('datatable', 'selected_row_indices')])
-def display_click_data(clickData, selected_row_indices):
-    date = clickData['points'][0]['x']
-    lsof_curves = []
-    lsof_statuses = []
-    for i in range(len(clickData['points'])):
-        lsof_curves.append(clickData['points'][i]['curveNumber'])
-    for i in enumerate(statuses):
-        if i[0] in lsof_curves:
-            lsof_statuses.append(i[1])
-    dfnew = df.Status.isin(lsof_statuses)
-    for i in range(len(dfnew)):
-        if dfnew[i] == True:
-            selected_row_indices.append(i)
-    return selected_row_indices'''
-
-
 
 if __name__ == '__main__':
     app.run_server(debug=True)
