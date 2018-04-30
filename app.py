@@ -11,6 +11,7 @@ import dash_core_components as dcc
 import dash_html_components as html
 from dash.dependencies import Input, Output, State
 import dash_table_experiments as dt
+import urllib
 
 import pandas as pd
 from pandas import DataFrame, read_csv
@@ -83,6 +84,9 @@ uniquevalues5 = np.unique(df[(df['Status'] == 'Closed')]['Key'].values)
 uniquevalues6 = np.unique(df[(df['Status'] == 'Unset')]['Key'].values)
 
 lsof_uniques = [uniquevalues,uniquevalues1,uniquevalues2,uniquevalues3,uniquevalues4,uniquevalues5,uniquevalues6]
+
+csv_total = df.to_csv(columns=col_list_keep,index=False, encoding='utf-8')
+csv_total = "data:text/csv;charset=utf-8," + urllib.parse.quote(csv_total)
 
 statuses = ['Searching', 'Proposed', 'Withdrawn', 'On Hold', 'Confirmed', 'Closed', 'Unset']
 
@@ -165,7 +169,13 @@ styles = {
 }
 
 app.layout = html.Div([
+    
+    html.H1('IBM@BP Resourcing App'),    
+    
     generate_table(df_top_table),
+    
+    html.H2('Demand Profile'),
+    
     dcc.Graph(
         id='basic-interactions',
         figure={
@@ -174,25 +184,39 @@ app.layout = html.Div([
         }
     ),
     
-    html.Div(dt.DataTable(
-    rows= df.to_dict('records'), # initialise the rows
-    row_selectable=True,
-    filterable=True,
-    sortable=True,
-    #resizable=True,
-    #selected_row_indices=[],
-    #column_widths=([50] * len(col_list_keep)),
-    #min_width=500,
-    columns=col_list_keep,
-    id='datatable'
-))
+    # Hidden div inside the app that stores the intermediate dataframe
+    html.Div(id='hidden_div', style={'display': 'none'}),
+    
+    html.A('Download Data',
+    id='download_link',
+    download="resource_raw_data.csv",
+    href=csv_total,
+    #target="_blank"
+    ),
+    
+    html.Div(
+        dt.DataTable(
+        rows= df.to_dict('records'), # initialise the rows
+        row_selectable=True,
+        filterable=True,
+        sortable=True,
+        #resizable=True,
+        #selected_row_indices=[],
+        #column_widths=([50] * len(col_list_keep)),
+        #min_width=500,
+        columns=col_list_keep,
+        id='datatable'
+        )
+    )
     
 ])
 
+#Need 3 Callbacks - make dataframe put in hidden Div, Pick up Dataframe and Make table Rows, Make Download Link
+
 @app.callback(
-    Output('datatable', 'rows'),
+    Output('hidden_div', 'children'),
     [Input('basic-interactions', 'clickData')])
-def display_click_data(clickData):
+def hidden(clickData):
     key = datetime.strptime(clickData['points'][0]['x'], '%Y-%m-%d').strftime('%Y-%m')
     lsof_curves = []
     lsof_statuses = []
@@ -202,7 +226,23 @@ def display_click_data(clickData):
         if i[0] in lsof_curves:
             lsof_statuses.append(i[1])
     dfnew = df[(df.Status.isin(lsof_statuses)) & (df['Key'] == key)]
-    return dfnew.to_dict('records')
+    return dfnew.to_json()
+
+@app.callback(
+    Output('datatable', 'rows'),
+    [Input('hidden_div', 'children')])
+def display_click_data(Hidden_Div):
+    dff = pd.read_json(Hidden_Div)
+    return dff.to_dict('records')
+
+@app.callback(
+    Output('download_link', 'href'),
+    [Input('hidden_div', 'children')])
+def download_csv(d_frame):
+    dfff = pd.read_json(d_frame)
+    csv_string = dfff.to_csv(columns=col_list_keep,index=False, encoding='utf-8')
+    csv_string = "data:text/csv;charset=utf-8," + urllib.parse.quote(csv_string)
+    return csv_string
 
 if __name__ == '__main__':
     app.run_server(debug=True)
